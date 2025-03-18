@@ -1,6 +1,6 @@
 // UNIT TESTING
 import { it, expect } from 'vitest';
-import { add, addInfinite } from './sum';
+import { add, addInfinite, addReducer } from './sum';
 
 //1. describe what to be tested
 //2. test function (callback function)
@@ -19,4 +19,12 @@ it('should add any infinite numbers', () => {
     expect(addInfinite(1, 2, 3, 4)).toBe(10);
     expect(addInfinite(1, 2, 3, 4, 5)).toBe(15);
     expect(addInfinite(1, 2, 3, 4, 5)).not.toBe('15'); //test to NOT be something (unnecessary in this case, just for demo purposes)
+});
+
+
+it('should add any infinite numbers with reducer', () => {
+    expect(addReducer(1, 2, 3)).toBe(6);
+    expect(addReducer(1, 2, 3, 4)).toBe(10);
+    expect(addReducer(1, 2, 3, 4, 5)).toBe(15);
+    expect(addReducer(1, 2, 3, 4, 5)).not.toBe('15'); //test to NOT be something (unnecessary in this case, just for demo purposes)
 });

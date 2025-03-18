@@ -13,3 +13,8 @@ export const addInfinite = (...numbers: number[]) => { //create rest parameter (
     }
     return sum;
 };
+
+
+export const addReducer = (...numbers: number[]) => {
+    return numbers.reduce((acc, curr) => acc + curr, 0);
+};
