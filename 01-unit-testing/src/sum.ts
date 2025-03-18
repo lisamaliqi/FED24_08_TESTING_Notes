@@ -6,7 +6,6 @@ export const add = (a: number, b: number) => {
 
 
 export const addInfinite = (...numbers: number[]) => { //create rest parameter (so i dont have to write numbers in [])
-    // REDUCEEEEE
     let sum = 0;
     for (let i = 0; i < numbers.length; i++) {
         sum += numbers[i];
@@ -15,6 +14,7 @@ export const addInfinite = (...numbers: number[]) => { //create rest parameter (
 };
 
 
+// REDUCEEEEE
 export const addReducer = (...numbers: number[]) => {
     return numbers.reduce((acc, curr) => acc + curr, 0);
 };
