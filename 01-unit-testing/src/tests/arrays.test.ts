@@ -5,11 +5,11 @@ describe('clones an array', () => {
     const a = ['i', 'like', 'unit', 'testing'];
     let b: any[] = []; 
 
-    beforeAll(() => { //do this function before all it in this describe block (once)
+    beforeAll(() => { //do this function before all tests in this describe block (once)
         b = clone(a);
     });
 
-    beforeEach(() => { //do this function before every it in this describe block (three times)
+    beforeEach(() => { //do this function before every test in this describe block (three times)
         // b = clone(a);
     });
 
