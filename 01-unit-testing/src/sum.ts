@@ -18,3 +18,12 @@ export const addInfinite = (...numbers: number[]) => { //create rest parameter (
 export const addReducer = (...numbers: number[]) => {
     return numbers.reduce((acc, curr) => acc + curr, 0);
 };
+
+
+
+
+
+//subtract a and b and return the difference with reduce 🤓
+export const subReducer = (initialValue: number, ...numbers: number[]) => {
+    return numbers.reduce((acc, curr) => acc - curr, initialValue);
+}
