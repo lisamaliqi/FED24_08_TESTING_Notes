@@ -1,14 +1,18 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, beforeAll } from "vitest";
 import { clone } from "../utils/arrays";
 
 describe('clones an array', () => {
     const a = ['i', 'like', 'unit', 'testing'];
     let b: any[] = []; 
 
-    beforeEach(() => { //do this function before every it in this describe block
+    beforeAll(() => { //do this function before all it in this describe block (once)
         b = clone(a);
     });
-    
+
+    beforeEach(() => { //do this function before every it in this describe block (three times)
+        // b = clone(a);
+    });
+
 
 
     it('contains the same numbers of items', () => {
