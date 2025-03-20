@@ -1,4 +1,4 @@
-import { beforeEach, afterEach, describe, expect, it } from 'vitest';
+import { beforeEach, afterEach, describe, expect, it, vi } from 'vitest';
 import { getTodos, saveTodos } from '../utils/todoStorage';
 import mockedLocalStorage from '../mocks/mockedLocalStorage';
 import { Todo } from '../types/Todo';
@@ -33,7 +33,14 @@ afterEach(() => {
 
 describe('Get todos', () => {
     it('returns empty list of todos', () => {
+        //register a spy on 'localStorage.getItem'
+        const getItemSpy = vi.spyOn(globalThis.localStorage, 'getItem');
+
         const todos = getTodos(); //get todos from localStorage
+
+
+        //make sure that 'localStorage.getItem' has been called once
+        expect(getItemSpy).toHaveBeenCalledOnce();
 
         expect(todos).toHaveLength(0); //expect todos to be empty
         // if i only have this i will get "local storage is not defined" because local storage only works in an actual browser (window)
@@ -46,7 +53,10 @@ describe('Save todos', () => {
     it('can save a todo', () => {
         // save TODO and make sure it's ok
         //i.e., test 'saveTodos'
+        const setItemSpy = vi.spyOn(globalThis.localStorage, 'setItem');
         const res = saveTodos([ TODO ]);
+
+        expect(setItemSpy).toHaveBeenCalledOnce();
         expect(res.success).toBe(true);
     });
 
@@ -58,6 +68,8 @@ describe('Save todos', () => {
 
         const todos = getTodos();
         expect(todos).toStrictEqual([ TODO ])
+
+        //this is more similar to an integration test because we are testing two different functions together to see if they work together
         
     });
 });
