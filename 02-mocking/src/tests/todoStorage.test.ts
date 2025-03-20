@@ -39,22 +39,25 @@ describe('Get todos', () => {
         // if i only have this i will get "local storage is not defined" because local storage only works in an actual browser (window)
         // we have to create a "fake" local storage to make it work with mock functions (check beforeEach and afterEach)
     });
-
-
 });
 
 
 describe('Save todos', () => {
-    it.todo('can save a todo', () => {
+    it('can save a todo', () => {
         // save TODO and make sure it's ok
         //i.e., test 'saveTodos'
-        
+        const res = saveTodos([ TODO ]);
+        expect(res.success).toBe(true);
     });
 
-    it.todo('can save a todo and then retrieve it', () => {
+    it('can save a todo and then retrieve it', () => {
         // save TODO and then make sure we can retrieve it
         // i.e., test 'saveTodos' and then check that the saved todo exist when invoking 'getTodos'
+        const res = saveTodos([ TODO ]);
+        expect(res.success).toBe(true);
+
+        const todos = getTodos();
+        expect(todos).toStrictEqual([ TODO ])
+        
     });
-
-
 });
