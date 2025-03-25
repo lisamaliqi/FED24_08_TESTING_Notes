@@ -1,17 +1,34 @@
 import { describe, expect, it } from "vitest";
 import * as TodoAPI from "../services/TodoAPI";
+import { TodoData } from "../types/Todo";
 
-
+const newTodo: TodoData = {
+    title: 'Just a random todo in test',
+    completed: false,
+};
 
 describe('TodoAPI', () => {
     it("should return a list", async () => {
         const todos = await TodoAPI.getTodos();
 
-        expect(todos).toHaveLength(4);//starting with 4 todos in db.json (backend/data)
         expect( Array.isArray(todos) ).toBe(true);
     });
 
-	it.todo("should create a todo", () => {});
+	it("should create a todo", async () => {
+        const todos = await TodoAPI.createTodo(newTodo);
+
+        console.log(todos)
+        expect(todos.id).toBeTypeOf('number');
+        expect(todos.title).toBe(newTodo.title);
+        expect(todos.completed).toBe(newTodo.completed);
+
+        //better alternative to the once above
+        expect(todos).toMatchObject({
+            id: expect.any(Number),
+            title: newTodo.title,
+            completed: newTodo.completed,
+        });
+    });
 
 	it.todo("should create and then get the todo", () => {});
 
