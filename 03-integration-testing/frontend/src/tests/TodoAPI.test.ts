@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { afterAll, beforeEach, describe, expect, it } from "vitest";
 import * as TodoAPI from "../services/TodoAPI";
 import { TodoData } from "../types/Todo";
 
@@ -6,6 +6,29 @@ const newTodo: TodoData = {
     title: 'Just a random todo in test',
     completed: false,
 };
+
+//clean databaseTodos before all tests
+const deleteAllTodos = async () => {
+    //get all todos
+    const todos = await TodoAPI.getTodos();
+
+    //delete them one by one 😈
+    //alright way:
+    // for (let i = 0; i < todos.length; i++) {
+    //     await TodoAPI.deleteTodo(todos[i].id);
+    // };
+
+    //better way:
+    for(const todo of todos) {
+        await TodoAPI.deleteTodo(todo.id);
+    };
+};
+
+//clean up before each test so we have a predictable environment
+beforeEach(deleteAllTodos);
+
+//tidy up after ourselves
+afterAll(deleteAllTodos);
 
 describe('TodoAPI', () => {
     it("should return a list", async () => {
@@ -38,16 +61,13 @@ describe('TodoAPI', () => {
 
         // console.log('todos: ', todos);
         // console.log('get: ', get);
-        expect(todos).toMatchObject({
-            id: expect.any(Number),
-            title: newTodo.title,
-            completed: newTodo.completed,
-        });
         expect(get).toMatchObject({
             id: todos.id,
             title: todos.title,
             completed: todos.completed,
         });
+        //this also works (maybe even better):
+        // expect(get).toMatchObject(todos);
     });
 
 	it("should create and then find the todo among all todos", async () => {
@@ -57,44 +77,36 @@ describe('TodoAPI', () => {
         // console.log('todos: ', todo);
         // console.log('GetAll: ', getAll);
 
-        expect(todo).toMatchObject({
-            id: expect.any(Number),
-            title: newTodo.title,
-            completed: newTodo.completed,
-        });
         expect(getAll).toContainEqual(todo);
     });
 
 	it("should create and then update the todo", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
-        const update = await TodoAPI.updateTodo(todo.id, todo);
+        const update = await TodoAPI.updateTodo(todo.id, {
+            completed: !todo.completed, //reverse so i update false to true or true to false
+        });
 
         // console.log('todos: ', todo);
-        // console.log('update: ', update);
-        expect(todo).toMatchObject({
-            id: expect.any(Number),
-            title: newTodo.title,
-            completed: newTodo.completed,
-        });
-        expect(update).toMatchObject({
-            id: todo.id,
-            title: todo.title,
-            completed: todo.completed,
+        // // console.log('update: ', update);
+        // expect(update).toMatchObject({
+        //     id: todo.id,
+        //     title: todo.title,
+        //     completed: todo.completed,
+        // });
+
+        expect(update).toStrictEqual({
+            ...todo,
+            completed: !todo.completed,
         });
     });
 
 	it("should create and then delete the todo", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
-        const deleteTodo = await TodoAPI.deleteTodo(todo.id);
+        await TodoAPI.deleteTodo(todo.id);
+        const todos = await TodoAPI.getTodos();
 
-        console.log('todos: ', todo);
-        console.log('deleteTodo: ', deleteTodo);
-        expect(todo).toMatchObject({
-            id: expect.any(Number),
-            title: newTodo.title,
-            completed: newTodo.completed,
-        });
-        expect(deleteTodo).toMatchObject({});
-
+        // console.log('todos: ', todo);
+        // console.log('deleteTodo: ', deleteTodo);
+        expect(todos).not.toContainEqual(todo);
     });
 });
