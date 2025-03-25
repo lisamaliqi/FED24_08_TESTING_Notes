@@ -11,7 +11,7 @@ const get = async <T>(url: string) => {
 	return res.data;
 }
 
-export const getTodos = () => {
+export const getTodosTest = () => {
 	return get<Todo[]>("http://localhost:3001/todos");
 }
 
@@ -20,7 +20,7 @@ const post = async <ResponseType, PayloadType>(url: string, payload: PayloadType
 	return res.data;
 }
 
-export const postTodo = (todo: TodoData) => {
+export const postTodoTest = (todo: TodoData) => {
 	return post<Todo, TodoData>("http://localhost:3001/todos", todo);
 }
 
@@ -35,7 +35,7 @@ const fetchGet = async <T>(url: string) => {
 	return data;
 }
 
-export const fetchGetTodos = () => {
+export const fetchGetTodosTest = () => {
 	return fetchGet<Todo[]>("http://localhost:3001/todos");
 }
 
@@ -54,6 +54,6 @@ const fetchPost = async <ResponseType, PayloadType>(url: string, payload: Payloa
 	return data;
 }
 
-export const fetchPostTodo = (todo: TodoData) => {
+export const fetchPostTodoTest = (todo: TodoData) => {
 	return fetchPost<Todo, TodoData>("http://localhost:3001/todos", todo);
 }
