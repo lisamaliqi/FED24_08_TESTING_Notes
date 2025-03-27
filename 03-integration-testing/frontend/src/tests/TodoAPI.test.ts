@@ -5,23 +5,22 @@ import { TodoData } from "../types/Todo";
 
 // 👂🏻 Before all tests, start listening for requests
 beforeAll(() => {
-    server.listen();
+	server.listen();
 });
 
 // 🧨 Reset handlers
 afterEach(() => {
-    server.resetHandlers();
+	server.resetHandlers();
 });
 
 // 🙉 After all tests, stop listening
 afterAll(() => {
-    server.close();
+	server.close();
 });
 
-
 const newTodo: TodoData = {
-    title: 'Just a random todo in test',
-    completed: false,
+	title: "Test todo",
+	completed: false,
 };
 
 /* 
@@ -59,9 +58,9 @@ describe('TodoAPI', () => {
         const todos = await TodoAPI.createTodo(newTodo);
 
         // console.log(todos)
-        expect(todos.id).toBeTypeOf('number');
-        expect(todos.title).toBe(newTodo.title);
-        expect(todos.completed).toBe(newTodo.completed);
+        // expect(todos.id).toBeTypeOf('number');
+        // expect(todos.title).toBe(newTodo.title);
+        // expect(todos.completed).toBe(newTodo.completed);
 
         //better alternative to the once above
         expect(todos).toMatchObject({
@@ -73,22 +72,30 @@ describe('TodoAPI', () => {
 
 
     //Workshop!!
-	it.skip("should create and then get the todo", async () => {
-        const todos = await TodoAPI.createTodo(newTodo);
-        const get = await TodoAPI.getTodo(todos.id);
+	it("should create and then get the todo", async () => {
+        // const todos = await TodoAPI.createTodo(newTodo);
+        // const get = await TodoAPI.getTodo(todos.id);
+
+        // create a new todo
+		const createdTodo = await TodoAPI.createTodo(newTodo);
+
+		// try to get the new todo
+		const todo = await TodoAPI.getTodo(createdTodo.id);
 
         // console.log('todos: ', todos);
         // console.log('get: ', get);
-        expect(get).toMatchObject({
+        /* expect(get).toMatchObject({
             id: todos.id,
             title: todos.title,
             completed: todos.completed,
-        });
+        }); */
         //this also works (maybe even better):
-        // expect(get).toMatchObject(todos);
+        // expect(get).toStrictEqual(todos);
+		expect(todo).toStrictEqual(createdTodo);
+
     });
 
-	it.skip("should create and then find the todo among all todos", async () => {
+	it("should create and then find the todo among all todos", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
         const getAll = await TodoAPI.getTodos();
 
@@ -98,7 +105,7 @@ describe('TodoAPI', () => {
         expect(getAll).toContainEqual(todo);
     });
 
-	it.skip("should create and then update the todo", async () => {
+	it("should create and then update the todo", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
         const update = await TodoAPI.updateTodo(todo.id, {
             completed: !todo.completed, //reverse so i update false to true or true to false

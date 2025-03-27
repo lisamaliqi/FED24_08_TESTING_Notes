@@ -10,6 +10,10 @@ const dummyTodos: Todo[] = [
 ];
 
 type CreateTodoRequestBody = TodoData;
+type UpdateTodoRequestBody = Partial<TodoData>;
+type TodoParams = {
+    todoId: string,
+};
 
 //array containing all our request handlers
 export const handlers = [
@@ -22,6 +26,21 @@ export const handlers = [
 
     //mock get single todo
     // GET http://localhost:3001/todos/:todoId
+    http.get<TodoParams>(BASE_URL + "/todos/:todoId", ({ params }) => { // Reading path parameters in https://mswjs.io/docs/network-behavior/rest/ + https://mswjs.io/docs/best-practices/typescript
+        // Get the todo ID from the request parameters
+		const todoId = Number(params.todoId);
+
+		// Check if a todo with that ID exists
+		const todo = dummyTodos.find(todo => todo.id === todoId);
+
+		// If not, respond with empty object and HTTP 404 Not Found
+		if (!todo) {
+			return HttpResponse.json({}, { status: 404 });
+		}
+
+		// Otherwise, respond with the todo with the corresponding ID
+		return HttpResponse.json(todo);
+    }),
 
 
     //mock create todo
@@ -36,11 +55,7 @@ export const handlers = [
         
         
         //find next available id
-        const id = dummyTodos.reduce((maxId, todo) => {
-            return todo.id < maxId
-            ? todo.id
-            : maxId;
-        }, 0) +1;
+        const id = Math.max(0, ...dummyTodos.map(todo => todo.id) ) + 1;
         
         
         //create todo object
@@ -61,6 +76,30 @@ export const handlers = [
 
     //mock update todo
     // PATCH http://localhost:3001/todos/:todoId
+    http.patch<TodoParams, UpdateTodoRequestBody>(BASE_URL + "/todos/:todoId", async ({ params, request }) => {
+        // Get the todo ID from the request
+        const todoId = Number(params.todoId);
+
+        // Get PATCH body
+        const payload = await request.json();
+
+        // Check if a todo with that ID exists
+        const todo = dummyTodos.find(todo => todo.id === todoId);
+
+        // If not, respond with empty object and HTTP 404 Not Found
+        if (!todo) {
+            return HttpResponse.json({}, { status: 404 });
+        }
+
+        // Update todo with payload
+        // todo.title = payload.title ? payload.title : todo.title;
+        todo.title = payload.title ?? todo.title;
+        todo.completed = payload.completed ?? todo.completed;
+
+        // Respond with updated todo
+        return HttpResponse.json(todo);
+    }),
+
 
     //mock delete todo
     // DESTROY http://localhost:3001/todos/:todoId
