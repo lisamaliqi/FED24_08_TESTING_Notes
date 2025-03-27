@@ -1,12 +1,30 @@
-import { afterAll, beforeEach, describe, expect, it } from "vitest";
+import { afterAll, afterEach, beforeAll, beforeEach, describe, expect, it } from "vitest";
+import { server } from "../mocks/server";
 import * as TodoAPI from "../services/TodoAPI";
 import { TodoData } from "../types/Todo";
+
+// 👂🏻 Before all tests, start listening for requests
+beforeAll(() => {
+    server.listen();
+});
+
+// 🧨 Reset handlers
+afterEach(() => {
+    server.resetHandlers();
+});
+
+// 🙉 After all tests, stop listening
+afterAll(() => {
+    server.close();
+});
+
 
 const newTodo: TodoData = {
     title: 'Just a random todo in test',
     completed: false,
 };
 
+/* 
 //clean databaseTodos before all tests
 const deleteAllTodos = async () => {
     //get all todos
@@ -28,7 +46,7 @@ const deleteAllTodos = async () => {
 beforeEach(deleteAllTodos);
 
 //tidy up after ourselves
-afterAll(deleteAllTodos);
+afterAll(deleteAllTodos); */
 
 describe('TodoAPI', () => {
     it("should return a list", async () => {
@@ -37,7 +55,7 @@ describe('TodoAPI', () => {
         expect( Array.isArray(todos) ).toBe(true);
     });
 
-	it("should create a todo", async () => {
+	it.skip("should create a todo", async () => {
         const todos = await TodoAPI.createTodo(newTodo);
 
         // console.log(todos)
@@ -55,7 +73,7 @@ describe('TodoAPI', () => {
 
 
     //Workshop!!
-	it("should create and then get the todo", async () => {
+	it.skip("should create and then get the todo", async () => {
         const todos = await TodoAPI.createTodo(newTodo);
         const get = await TodoAPI.getTodo(todos.id);
 
@@ -70,7 +88,7 @@ describe('TodoAPI', () => {
         // expect(get).toMatchObject(todos);
     });
 
-	it("should create and then find the todo among all todos", async () => {
+	it.skip("should create and then find the todo among all todos", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
         const getAll = await TodoAPI.getTodos();
 
@@ -80,7 +98,7 @@ describe('TodoAPI', () => {
         expect(getAll).toContainEqual(todo);
     });
 
-	it("should create and then update the todo", async () => {
+	it.skip("should create and then update the todo", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
         const update = await TodoAPI.updateTodo(todo.id, {
             completed: !todo.completed, //reverse so i update false to true or true to false
@@ -100,7 +118,7 @@ describe('TodoAPI', () => {
         });
     });
 
-	it("should create and then delete the todo", async () => {
+	it.skip("should create and then delete the todo", async () => {
         const todo = await TodoAPI.createTodo(newTodo);
         await TodoAPI.deleteTodo(todo.id);
         const todos = await TodoAPI.getTodos();

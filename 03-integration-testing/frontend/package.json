@@ -24,6 +24,7 @@
     "eslint": "^9.22.0",
     "globals": "^16.0.0",
     "happy-dom": "^17.4.4",
+    "msw": "^2.7.3",
     "npm-run-all2": "^7.0.2",
     "sass": "1.77.6",
     "type-coverage": "^2.29.7",
