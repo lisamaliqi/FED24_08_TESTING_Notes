@@ -55,7 +55,7 @@ describe('TodoAPI', () => {
         expect( Array.isArray(todos) ).toBe(true);
     });
 
-	it.skip("should create a todo", async () => {
+	it("should create a todo", async () => {
         const todos = await TodoAPI.createTodo(newTodo);
 
         // console.log(todos)
