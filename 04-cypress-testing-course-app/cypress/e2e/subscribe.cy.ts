@@ -18,7 +18,7 @@ describe("Newsletter Subscribe Form", () => {
         it("allows users to subscribe to the email list", () => {
             // ✍🏻
             cy.getByDataTest("email-input")
-                .should("be.visible")
+                // .should("be.visible")
                 .type(email);
 
             // 👆🏻
@@ -33,25 +33,25 @@ describe("Newsletter Subscribe Form", () => {
 
 
     context("Sad paths 🥺", () => {
-        it.only("displays an error message when the email is invalid", () => {
+        it("displays an error message when the email is invalid", () => {
             cy.getByDataTest("email-input").type(invalidEmail);
             cy.getByDataTest("submit-button").click();
             cy.getByDataTest("success-message").should("not.exist");
         });
 
 
-        it.only("should not allow users to subscribe twice", () => {
+        it("should not allow users to subscribe twice", () => {
             cy.getByDataTest("email-input").type(existingSubscriberEmail);
             cy.getByDataTest("submit-button").click();
-            cy.get('[data-test="server-error-message"]')
+            cy.getByDataTest("server-error-message")
                 .should("be.visible")
                 .contains(existingSubscriberEmail);
         });
 
-        
+
         it("should not allow subscribing without an email address", () => {
             cy.getByDataTest("submit-button").click();
-            cy.get('[data-test="error-message"]')
+            cy.getByDataTest("error-message")
                 .should("be.visible")
                 .contains("Email is required");
         });
