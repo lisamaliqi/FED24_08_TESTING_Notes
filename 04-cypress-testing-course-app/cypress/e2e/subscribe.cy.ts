@@ -1,4 +1,11 @@
+import { faker } from "@faker-js/faker";
+
+
 describe("Newsletter Subscribe Form", () => {
+    const email = faker.internet.email();
+ 	const invalidEmail = "pelle";
+ 	const existingSubscriberEmail = "john@example.com";
+ 
     beforeEach(() => {
         // Visit page
         cy.visit("http://localhost:3000");
@@ -13,7 +20,7 @@ describe("Newsletter Subscribe Form", () => {
         cy.getByDataTest("email-input")
             .scrollIntoView()
             .should("be.visible")
-            .type("pelle@svanslos.nu");
+            .type(email);
 
         // 👆🏻
         cy.getByDataTest("submit-button").click();
@@ -21,6 +28,6 @@ describe("Newsletter Subscribe Form", () => {
         // 🥳❔
         cy.getByDataTest("success-message")
             .should("exist")
-            .contains("pelle@svanslos.nu");
+            .contains(email);
     });
 });

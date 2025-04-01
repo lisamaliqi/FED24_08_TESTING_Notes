@@ -20,14 +20,15 @@
     "globby": "^13.1.1",
     "linkinator": "^6.1.2",
     "next": "^15.2.4",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-hook-form": "^7.27.1",
     "react-slick": "^0.28.1",
     "rehype-slug": "^5.0.1",
     "xstate": "^4.30.5"
   },
   "devDependencies": {
+    "@faker-js/faker": "^9.6.0",
     "@types/acorn": "^4.0.6",
     "@types/chai": "^4.3.20",
     "@types/eslint": "^9.6.1",
