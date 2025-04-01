@@ -1,5 +1,5 @@
 describe("Todos", () => {
-    context.only("initial state", () => {
+    context("initial state", () => {
         beforeEach(() => {
             // Intercept GET requests to http://localhost:3001/todos
             // inline data is bad data 🥴
@@ -80,6 +80,31 @@ describe("Todos", () => {
             cy.get("#new-todo-title").type("My ephemeral todo");
             cy.get("[type=\"reset\"]").click();
             cy.get("#new-todo-title").should("have.value", "");
+        });
+    });
+
+    describe.only("Todo ID", () => {
+        it("should get the first todo ID", () => {
+            cy.visit("/");
+
+            // cy.get("#todos")
+            // 	.find("li")
+            // 	.first()
+            // 	.invoke("attr", "data-todo-id")
+            // 	.then(todoId => {
+            // 		console.log("Todo Id of first todo is:", todoId);
+            // 	});
+
+            cy.get("#todos")
+                .find("li")
+                .first()
+                .invoke("attr", "data-todo-id")
+                .as("todoId");
+
+            cy.get("@todoId").then(todoId => {
+                // Do something with it
+                console.log("Todo Id of first todo is:", todoId);
+            });
         });
     });
 });
