@@ -23,7 +23,7 @@ export default function Header({ content, courses, progressService }) {
         <div className="relative z-20">
           <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-5 sm:px-6 sm:py-4 lg:px-8 md:justify-start md:space-x-10">
             <div>
-              <Link href="/">
+              <Link href="/" legacyBehavior>
                 <a className="flex">
                   <span className="sr-only">Workflow</span>
                   <CodeIcon className="h-8 w-auto sm:h-10 text-blue-500" />

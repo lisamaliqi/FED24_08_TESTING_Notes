@@ -55,7 +55,7 @@ export default function LessonProgress({ lessons, progressService, course }) {
               {/* Lesson Title */}
               <span className="ml-4 min-w-0 flex flex-col">
                 <span className="text-xs font-semibold tracking-wide uppercase">
-                  <Link href={`/${course}/${lesson.slug}`}>
+                  <Link href={`/${course}/${lesson.slug}`} legacyBehavior>
                     <a data-test={`lesson-progress-link-${index}`}>
                       {lesson.title}
                     </a>

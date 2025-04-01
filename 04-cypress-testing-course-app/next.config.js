@@ -1,6 +1,6 @@
 
 module.exports = {
-  swcMinify: true,
+  // swcMinify: true,
   images: {
     domains: ["images.unsplash.com", "source.unsplash.com", "tailwindui.com"],
   },
