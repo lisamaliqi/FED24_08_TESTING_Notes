@@ -1,7 +1,7 @@
 describe("Home Page", () => {
 	beforeEach(() => {
 		// Visit page
-		cy.visit("http://localhost:3000");
+		cy.visit("/");
 
 		// Wait for the app to be fully hydrated and visible 💦
 		cy.get("#__next").should("be.visible");
@@ -29,7 +29,7 @@ describe("Home Page", () => {
 
 
   context("Courses section", () => {
-    it.only("Course: Testing Your First Next.js Application", () => {
+    it("Course: Testing Your First Next.js Application", () => {
       // Find link with text "Get started" and click on it
       cy.getByDataTest("course-0")
         .find("a")
