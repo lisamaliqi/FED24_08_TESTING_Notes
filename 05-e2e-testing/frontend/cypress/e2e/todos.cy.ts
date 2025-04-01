@@ -9,7 +9,7 @@ describe("Todos", () => {
         });
 
         it("should not show error dialog", () => {
-            cy.get("#error").should("not.be.visible");
+            cy.get("[role=\"alert\"]").should("not.be.visible");
         });
     });
 
@@ -22,7 +22,7 @@ describe("Todos", () => {
             // cy.get("#todos").find("li").its("length").as("initialLength");
             // cy.get("#new-todo-title").type("{enter}");
             cy.get("[type=\"submit\"]").click();
-            cy.get("#error").should("be.visible").contains("Title cannot be empty");
+            cy.get("[role=\"alert\"]").should("be.visible").contains("Title cannot be empty");
         });
 
         it(
