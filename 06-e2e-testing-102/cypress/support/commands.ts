@@ -1,23 +1,18 @@
 /// <reference types="cypress" />
 
 Cypress.Commands.add('login', (email, password) => {
-	cy.visit('/login');
+	cy.get("input[type=\"email\"]").type(email, { delay: 10 });
+	cy.get("input[type=\"password\"]").type(password);
+	cy.get("[type=\"submit\"]").click();
 
-	cy.get('input[type=\'email\']').type(email, { delay: 50 });
-	cy.get('input[type=\'password\']').type(password);
-	cy.get('[type=\'submit\']').click();
+	cy.location("pathname").should("equal", "/");
+});
 
-	cy.location('pathname').should('equal', '/');
- });
-
-
- Cypress.Commands.add('logout', () => {
+Cypress.Commands.add('logout', () => {
 	cy.visit("/logout");
 	// make sure we've actually been logged out as it takes a small amount of time
 	cy.location("pathname").should("equal", "/login");
 });
-
-
 
 
 

@@ -9,12 +9,11 @@ declare namespace Cypress {
 		 */
 		login(email: string, password: string): Chainable<JQuery<HTMLElement>>;
 
-
 		/**
- 		 * Custom command to log out a user.
- 		 *
- 		 * @example cy.logout()
- 		 */
+		 * Custom command to log out a user.
+		 *
+		 * @example cy.logout()
+		 */
 		logout(): Chainable<JQuery<HTMLElement>>;
 	}
 }
