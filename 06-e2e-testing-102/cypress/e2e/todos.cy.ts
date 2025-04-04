@@ -28,11 +28,14 @@ describe('Firebase todos', () => {
 		});
 
 		it('Should login with an existing user', () => {
-			cy.get('input[type=\'email\']').type(testUser.email, { delay: 50 });
-			cy.get('input[type=\'password\']').type(testUser.password);
-			cy.get('[type=\'submit\']').click();
+			// cy.get('input[type=\'email\']').type(testUser.email, { delay: 50 });
+			// cy.get('input[type=\'password\']').type(testUser.password);
+			// cy.get('[type=\'submit\']').click();
 
-			cy.location('pathname').should('equal', '/');
+			// cy.location('pathname').should('equal', '/');
+
+			//this instead of the one above (using commands.ts and index.d.ts)
+			cy.login(testUser.email, testUser.password);
 
 		});
 	});

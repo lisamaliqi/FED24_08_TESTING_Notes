@@ -1,4 +1,20 @@
 /// <reference types="cypress" />
+
+Cypress.Commands.add('login', (email, password) => {
+	cy.visit('/login');
+
+	cy.get('input[type=\'email\']').type(email, { delay: 50 });
+	cy.get('input[type=\'password\']').type(password);
+	cy.get('[type=\'submit\']').click();
+
+	cy.location('pathname').should('equal', '/');
+ });
+
+
+
+
+
+
 // ***********************************************
 // This example commands.ts shows you how to
 // create various custom commands and overwrite
@@ -11,7 +27,6 @@
 //
 //
 // -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
 //
 //
 // -- This is a child command --
