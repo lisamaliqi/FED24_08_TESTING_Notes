@@ -40,7 +40,7 @@ describe("Firebase Todos", () => {
 		});
 	});
 
-	context.only("Todo actions", () => {
+	context("Todo actions", () => {
 		beforeEach(() => {
 			cy.visit("/login");
 			cy.login(snelhest.email, snelhest.password);
@@ -54,8 +54,26 @@ describe("Firebase Todos", () => {
 			cy.visit("/todos");
 
 			cy.get(".todo-list-item .todo-title")
-				.each($el => {
+				.each($el => { //$el is a jQuery element, if it starts with $ it is a jQuery element
 					cy.wrap($el).should("not.be.empty");
+				});
+		});
+
+		it("Should click on the first todo and land on a page with that todo's id in the URL", () => {
+			cy.visit("/todos");
+
+			// get the first todo item in the list
+			cy.get(".todo-list-item")
+				.first()
+				.as("firstTodoItem")
+				.invoke("attr", "data-todo-id")
+				.then(todoId => {
+					console.log("Todo ID of first todo is:", todoId);
+
+					// the same as cy.get(".todo-list-item").first().click(); but we have set an alias above using `.as()`
+					cy.get("@firstTodoItem").click();
+
+					cy.location("pathname").should("equal", "/todos/" + todoId);
 				});
 		});
 	});
