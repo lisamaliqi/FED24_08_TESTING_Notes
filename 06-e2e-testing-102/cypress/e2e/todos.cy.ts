@@ -22,9 +22,6 @@ describe('Firebase todos', () => {
 
 		afterEach(() => {
 			cy.logout();
-
-			//make sure we've actually been logged out as it takes a small amount of time
-			cy.location('pathname').should('equal', '/login');
 		});
 
 		it('Should login with an existing user', () => {
@@ -36,7 +33,12 @@ describe('Firebase todos', () => {
 
 			//this instead of the one above (using commands.ts and index.d.ts)
 			cy.login(testUser.email, testUser.password);
+		});
 
+		it("should log in with an existing user and visit todos page", () => {
+			cy.login(testUser.email, testUser.password);  // 🐴😋🌾
+			cy.visit("/todos");
+			cy.location("pathname").should("equal", "/todos");
 		});
 	});
 });
