@@ -21,7 +21,7 @@ describe('Firebase todos', () => {
 		});
 
 		afterEach(() => {
-			cy.visit('/logout');
+			cy.logout();
 
 			//make sure we've actually been logged out as it takes a small amount of time
 			cy.location('pathname').should('equal', '/login');
